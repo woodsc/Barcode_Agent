@@ -1,0 +1,20 @@
+#User configs override project configs and project configs override the defaults.
+#Example configuration for a no reference project.
+
+common.pipeline=no_ref
+
+quality_checker.max_single_coverage=9999
+quality_checker.max_mixtures=10
+quality_checker.max_ns=2
+quality_checker.max_marks=80
+
+quality_checker.check_genetic_distance=false
+quality_checker.check_stop_codons=false
+quality_checker.check_hasinserts=false
+quality_checker.check_hasdeletions=false
+
+tasks.export_with_dashes=true
+
+insert_detector.frame_align_deletions=false
+
+guiconfig.hide_aa=true

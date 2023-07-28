@@ -1,0 +1,164 @@
+###############################################################
+#                                                             #
+# phredpar.dat - phred parameter file: 020425                 #
+#                                                             #
+#   known chemistries: primer, terminator, unknown            #
+#   known dyes       : rhodamine, d-rhodamine, big-dye        #
+#                      energy-transfer, bodipy, unknown       #
+#   known machines   : ABI_373_377, MolDyn_MegaBACE,          #
+#                      ABI_3700, LI-COR_4000,                 #
+#                      Beckman_CEQ_2000, ABI_3100             #
+#                                                             #
+# Notes:                                                      #
+#       (1) enclose the `dye primer' name in double quotes    #
+#           and include spaces in the names.                  #
+#       (2) leave one or more spaces between the `dye primer' #
+#           and chemistry names, between the chemistry and    #
+#           dye names, and between the dye and machine names. #
+#       (3) add entries between the `begin chem_list' and     #
+#           `end chem_list' lines.                            #
+#       (4) `dye primer' string `__phred_default__'           #
+#           identifies the chemistry, dye, and machine used   #
+#           when the chromatogram dye primer string is        #
+#           missing from either the chromatogram or this file #
+#           and phred is run with the -process_nomatch        #
+#           option.                                           #
+#                                                             #
+###############################################################
+#
+begin chem_list
+"DP6%25Ac{-21M13}"		primer		rhodamine		ABI_373_377
+"DP6%Ac{-21M13}"		primer		rhodamine		ABI_373_377
+"DP6%25Ac{M13Rev}"		primer		rhodamine		ABI_373_377
+"DP6%Ac{M13Rev}"		primer		rhodamine		ABI_373_377
+"DyePrimer{-21m13}"		primer		rhodamine		ABI_373_377
+"DyePrimer{KS}"			primer		rhodamine		ABI_373_377
+"DyePrimer{M13RP1}"		primer		rhodamine		ABI_373_377
+"DyePrimer{SK}"			primer		rhodamine		ABI_373_377
+"DyePrimer{SP6}"		primer		rhodamine		ABI_373_377
+"DyePrimer{T3}"			primer		rhodamine		ABI_373_377
+"DyePrimer{T7}"			primer		rhodamine		ABI_373_377
+"DyePrimer{-21M13LR}"           primer          rhodamine		ABI_373_377
+"DP5%LR{HS}"			primer		rhodamine		ABI_373_377
+"DP4%25Ac{-21M13}"		primer		rhodamine		ABI_373_377
+"DP4%Ac{-21M13}"		primer		rhodamine		ABI_373_377
+"DP4%25Acv2{M13Rev}"		primer		rhodamine		ABI_373_377
+"DP4%Acv2{M13Rev}"		primer		rhodamine		ABI_373_377
+"DP4%Ac{KS}"			primer		rhodamine		ABI_373_377
+"DP4%Ac{M13Rev}"		primer		rhodamine		ABI_373_377
+"DP4%Ac{SK}"			primer		rhodamine		ABI_373_377
+"DP4%Ac{SP6}"			primer		rhodamine		ABI_373_377
+"DP4%Ac{T3}"			primer		rhodamine		ABI_373_377
+"DP4%Ac{T7}"			primer		rhodamine		ABI_373_377
+"DyePrimer48cm{-21M13}"		primer		rhodamine		ABI_373_377
+"DP5%CEHV(KS)"                  primer		rhodamine		ABI_373_377
+"DP5%CEHV(SK)"                  primer		rhodamine		ABI_373_377
+"DP5%LR(KS)"                    primer		rhodamine		ABI_373_377
+"DP5%LR(SK)"                    primer		rhodamine		ABI_373_377
+"DP6%Ac{SP6}"                   primer          rhodamine		ABI_373_377
+"DyePrimer{RP1LR}"              primer          rhodamine		ABI_373_377
+"P+DyePrimer{-21m13}"           primer          rhodamine		ABI_373_377
+"mob.REGA+ET"			primer		energy-transfer		ABI_373_377
+"DP4%Ac{ETPrimer}"		primer		energy-transfer		ABI_373_377
+"DyePrimer48cm{RP1}"		primer		energy-transfer		ABI_373_377
+"ET{-28m13rev}960221"		primer		energy-transfer		ABI_373_377
+"ET{-28m13rev}"                 primer          energy-transfer		ABI_373_377
+"ET{-40m13}"			primer		energy-transfer		ABI_373_377
+"ET{-40m13F}"                   primer          energy-transfer		ABI_373_377
+"ET{-40m13}960208"              primer          energy-transfer		ABI_373_377
+"ET{-40m13}longreader"		primer		energy-transfer		ABI_373_377
+"ET{-21m13fwd}longreader"       primer          energy-transfer		ABI_373_377
+"ET{-21m13fwd}960909"		primer		energy-transfer		ABI_373_377
+"ET{-21m13fwd}"                 primer          energy-transfer		ABI_373_377
+"ET{-21m13}fwd longreader"      primer          energy-transfer         ABI_373_377
+"mob377longrngrxlET"		primer		energy-transfer		ABI_373_377
+"ET{40m13}960208"               primer          energy-transfer		ABI_373_377
+"DP5%LR{BD_M13_FWD_&_REV}"      primer          big-dye			ABI_373_377
+"DP5%LR{BD M13 FWD & REV}"      primer          big-dye			ABI_373_377
+"ET Primers"		        primer          energy-transfer		MolDyn_MegaBACE
+"DP3700POP5{ET}v1.mob"          primer          energy-transfer         ABI_3700
+"DP3700POP5_ET_v2.mob"          primer          energy-transfer         ABI_3700
+"DP3700POP5_ET_v2.mob"          primer          energy-transfer         ABI_3700
+"DP3700POP5{BD-21M13}v1.mob"    primer          big-dye			ABI_3700
+"DP3700POP5{BD-M13Rev}v1.mob"   primer          big-dye			ABI_3700
+"DP3700POP6{BD-M13Rev}v1.mob"   primer          big-dye                 ABI_3700
+"DP3700POP6{BD-21M13}v3.mob"    primer          big-dye			ABI_3700
+"DP3700POP6{BD-M13Rev}v2.mob"   primer          big-dye                 ABI_3700
+"DP3100POP6{BD-21M13}v1.mob"    primer          big-dye                 ABI_3100
+"DP3100POP6{BD-M13Rev}v1.mob"   primer          big-dye                 ABI_3100
+"DyePrimer{LI-COR_IR_2.2}"      primer          big-dye                 LI-COR_4000
+"DT6%Ac{A Set-AnyPrimer}"	terminator	rhodamine		ABI_373_377
+"DT6%Ac{A_Set-AnyPrimer}"	terminator	rhodamine		ABI_373_377
+"DT6%25Ac{A_Set-AnyPrimer}"     terminator      rhodamine		ABI_373_377
+"DyeTerm{T7}-Set B"		terminator	rhodamine		ABI_373_377
+"DyeTerm{T7}-Set_B"		terminator	rhodamine		ABI_373_377
+"FS_Dye_Terminator{AnyPrimer}"	terminator	rhodamine		ABI_373_377
+"FS Dye Terminator{AnyPrimer}"	terminator	rhodamine		ABI_373_377
+"DT4%25Ac{A Set-AnyPrimer}"	terminator	rhodamine		ABI_373_377
+"DT4%Ac{A Set-AnyPrimer}"	terminator	rhodamine		ABI_373_377
+"DT4%25Ac{A_Set-AnyPrimer}"     terminator      rhodamine		ABI_373_377
+"DT4%Ac{A_Set-AnyPrimer}"       terminator      rhodamine		ABI_373_377
+"DyeTerminator{AnyPrimer}"	terminator	rhodamine		ABI_373_377
+"DT4%25Ac{B Set-AnyPrimer}"	terminator	rhodamine		ABI_373_377
+"DT4%Ac{B Set-AnyPrimer}"	terminator	rhodamine		ABI_373_377
+"DT_{dR_Set_Any-Primer}"	terminator	d-rhodamine		ABI_373_377
+"DT {dR Set Any-Primer}"        terminator      d-rhodamine		ABI_373_377
+"DT_{dRhod_Set_Any-Primer}"     terminator      d-rhodamine		ABI_373_377
+"DT DSP{dR Set-AnyPrimer}"      terminator      d-rhodamine		ABI_373_377
+"DT_{BD_Set_Any-Primer}"        terminator	big-dye			ABI_373_377
+"DT{BD_Set_Any-Primer}"         terminator      big-dye			ABI_373_377
+"DT {BD Set Any-Primer}"        terminator      big-dye			ABI_373_377
+"DT373{BD Set-AnyPrimer}"       terminator      big-dye			ABI_373_377
+"DT_{BigDye_Set_Any-Primer}"    terminator      big-dye			ABI_373_377
+"DT_BigDye_Set_Any-Primer"      terminator      big-dye			ABI_373_377
+"373 BDT"                       terminator      big-dye                 ABI_373_377
+"373_BDT"                       terminator      big-dye                 ABI_373_377
+"ET Terminators"	        terminator      energy-transfer		MolDyn_MegaBACE
+"ET_MegaTerm"                   terminator      energy-transfer         MolDyn_MegaBACE
+"DT3700POP5{BD}v1.mob"          terminator      big-dye                 ABI_3700
+"DT3700POP6{BD-MIT}v1.mob"      terminator      big-dye                 ABI_3700
+"DT3700POP5{BD}v2.mob"          terminator      big-dye                 ABI_3700
+"DT3700POP5{BD}v3.mob"          terminator      big-dye                 ABI_3700
+"DT3700POP6{BD}v0_3.mob"        terminator      big-dye                 ABI_3700
+"DT3700POP6{BD}v4.mob"          terminator      big-dye                 ABI_3700
+"DT3700POP6{BD}v5.mob"          terminator      big-dye                 ABI_3700
+"DT3700PO.MOB"                  terminator      big-dye                 ABI_3700
+"DT3700POP6{37C}.mob"           terminator      big-dye                 ABI_3700
+"DT3700POP6{BD-40deg}v1.mob"    terminator      big-dye                 ABI_3700
+"DT3700FSP{BD}v1.mob"           terminator      big-dye                 ABI_3700
+"DT3700POP5{dRhod}v1.mob"       terminator      d-rhodamine             ABI_3700
+"DT3700POP6{dRhod}v3.mob"       terminator      d-rhodamine             ABI_3700
+"DT3700POP5{ET}.mob"            terminator      energy-transfer         ABI_3700
+"DT3100POP6{dRhod}v1.mob"       terminator      d-rhodamine             ABI_3100
+"DT3100POP6{BD}v2.mob"          terminator      big-dye                 ABI_3100
+"DT3100POP6{BDv3}v1.mob"        terminator      big-dye                 ABI_3100
+"MegaBACE Mobility File"        unknown         energy-transfer         MolDyn_MegaBACE
+"BeckmanCEQ"			terminator	big-dye			Beckman_CEQ_2000
+"KB_3730_POP7_BDTv3.mob"	terminator	big-dye		ABI_3700
+"DT3700POP5{BDv3}v1.mob"	terminator	big-dye		ABI_3700
+"KB_3130_POP6_BDTv3.mob"	terminator	big-dye		ABI_3100
+"KB_3130_POP6_BDTv1.mob"	terminator	big-dye		ABI_3100
+"KB_3130_POP7_BDTv3.mob"	terminator	big-dye		ABI_3100
+"KB_3100_POP6_BDTv1.mob"    terminator	big-dye		ABI_3100
+"KB_3130_POP7_BDTv1.mob"    terminator	big-dye		ABI_3100
+"KB_3730_POP7_BDTv1.mob"	terminator	big-dye		ABI_3700
+"DT3730POP7{BDv3}.mob"	terminator	big-dye		ABI_3700
+"KB_3500_POP7_BDTv1.mob" terminator	big-dye		ABI_3700
+"KB_3500_POP7_BDTv3.mob" terminator	big-dye		ABI_3700
+"DT POP6{BD Set-AnyPrimer}.mob" terminator	big-dye		ABI_3700
+"KB_3500_POP6_BDTv3.mob" terminator	big-dye		ABI_3700
+"KB_3100_POP4_BDTv3.mob" terminator	big-dye		ABI_3100
+"DT3100POP4LR{BD}v1.mob" terminator     big-dye	        ABI_3100
+"KB_310_POP6_BDTv1_50Std.mob" terminator	big-dye		ABI_3100
+"KB_3200_SeqStudio_POP1_BDTv3.mob" terminator	big-dye	ABI_3700
+#
+# Chromatograms with no (or empty) dye primer string.
+# Edit the following entry if you want phred to treat such chromatograms differently.
+ ""                              primer          rhodamine               ABI_373_377
+#
+# Chromatograms with non-empty, unmatchable dye primer strings, and phred runs
+# with the '-process_nomatch' option.
+# Edit the following entry if you want phred to treat such chromatograms differently.
+# "__no_matching_string__"        primer          rhodamine               ABI_373_377
+#
+end chem_list

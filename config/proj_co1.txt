@@ -1,0 +1,4 @@
+#example CO1 reference project.  The common.choose allows alignment to the best
+#matching standard of a set.
+
+common.choose=CO1_EXAMPLE1:.EX1,CO1_EXAMPLE2:.EX2,CO1_EXAMPLE3:.EX3
