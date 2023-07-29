@@ -442,7 +442,11 @@ class Tasks
         #message("Phreding")
         if(RUBY_PLATFORM =~ /(win|w)32$/ or RUBY_PLATFORM =~ /x64-mingw-ucrt$/)
           ENV['PHRED_PARAMETER_FILE'] = './phredpar.dat'
-          system("bin/phred.exe \"#{f}\" -q \"#{qual}\" -d \"#{poly}\"")
+					phred_exe = Dir["bin/phred.exe"].first
+					phred_exe = Dir["bin/phred_win32.exe"].first if(phred_exe.nil?)
+					phred_exe = Dir["bin/workstation_phred.exe"].first if(phred_exe.nil?)
+					phred_exe = Dir["bin/*phred*.exe"].first if(phred_exe.nil?)
+					system("#{phred_exe} \"#{f}\" -q \"#{qual}\" -d \"#{poly}\"")
           raise "phred_error"  if(!File.exists?("bin/phred.exe"))
         elsif(RUBY_PLATFORM =~ /x86_64-linux/)
           ENV['PHRED_PARAMETER_FILE'] = './phredpar.dat'

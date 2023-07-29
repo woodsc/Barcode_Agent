@@ -4,7 +4,7 @@ This project provides a tool for automatic basecalling and manual inspection of 
 
 Please note: while this software is free to use for academic purposes, commercial users must contact the Univerity of British Columbia to purchase a license.
 
-TODO, provide link to UBC contact?
+https://uilo.ubc.ca/about-us/contact-us
 
 ## Features
 
@@ -26,7 +26,8 @@ TODO, provide link to UBC contact?
 ### Windows
 
 - Install ruby 2.7 or higher with a devkit from https://rubyinstaller.org/ .
-- Double click on the file Barcode_Agent/windows_setup.rb
+- Double click on the file Barcode_Agent/windows_setup.rb .  This may take up to an hour.
+  - If it pauses with a Y/N question, press enter to continue.
 - Put the phred executable at Barcode_Agent/bin/phred.exe .
   - Phred can be obtained at https://www.phrap.com/phred/ .
 
@@ -193,4 +194,10 @@ This software is free to use for academic purposes. For commercial use, please c
 
 ## Contact
 
-(Contact details for purchasing a license goes here)
+University-Industry Liaison Office
+Technology Enterprise Facility III
+#103 - 6190 Agronomy Road, Vancouver, BC
+V6T 1Z3
+Tel: (604) 822-8580
+
+https://uilo.ubc.ca/about-us/contact-us

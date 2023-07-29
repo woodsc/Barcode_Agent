@@ -1,1 +1,1 @@
-bin\ruby\bin\ruby.bat recall.rb
+bin\ruby\bin\ruby.bat barcode_agent.rb

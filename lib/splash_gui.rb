@@ -35,7 +35,12 @@ def splash_gui()
   #check if phred is available.
   phredloc = nil
   if(RUBY_PLATFORM =~ /(win|w)32$/ or RUBY_PLATFORM =~ /x64-mingw-ucrt$/)
-    phredloc = "./bin/phred.exe"
+    #phredloc = "./bin/phred.exe"
+    phred_exe = Dir["bin/phred.exe"].first
+    phred_exe = Dir["bin/phred_win32.exe"].first if(phred_exe.nil?)
+    phred_exe = Dir["bin/workstation_phred.exe"].first if(phred_exe.nil?)
+    phred_exe = Dir["bin/*phred*.exe"].first if(phred_exe.nil?)
+    phredloc = phred_exe
   elsif(RUBY_PLATFORM =~ /x86_64-linux/)
     phredloc = "./bin/phred_linux_x86_64"
   elsif(RUBY_PLATFORM =~ /i686-darwin10/)
