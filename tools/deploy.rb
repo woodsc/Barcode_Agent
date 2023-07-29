@@ -60,7 +60,7 @@ end
 
 #tar gz
 #system("tar cvzf ../downloads/barcode_agent_v#{$VERSION}_#{$RELEASE_DATE}.tar.gz #{dir}")
-system("zip ../downloads/barcode_agent_v#{$VERSION}_#{$RELEASE_DATE}.zip #{dir}")
+system("zip -r ../downloads/barcode_agent_v#{$VERSION}_#{$RELEASE_DATE}.zip #{dir}")
 
 
 #Remove temp folder.
