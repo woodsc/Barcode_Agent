@@ -1,7 +1,10 @@
 #Still testing.
 
 #install our alignment gem.
-system("gem install --local bin/alignment_ext-0.0.0.gem")
+FileUtils.cd("bin/") do
+  system("gem install --local alignment_ext-0.0.0.gem")
+end
+
 
 #seems to work.
 system("ridk exec pacman -Syu --noconfirm")
