@@ -35,7 +35,7 @@ FileUtils.cp("../config/proj_co1_example3.txt", "#{dir}/barcode_agent/config")
 FileUtils.cp("../config/proj_no_reference.txt", "#{dir}/barcode_agent/config")
 FileUtils.cp("../config/proj_tufa_example.txt", "#{dir}/barcode_agent/config")
 
-FileUtils.cp("../bin/alignment_ext-0.0.0.gem", "#{dir}/barcode_agent/bin")
+FileUtils.cp("../bin/alignment_ext-1.0.0.gem", "#{dir}/barcode_agent/bin")
 FileUtils.cp("../bin/gzip.exe", "#{dir}/barcode_agent/bin")
 FileUtils.cp("../bin/tar.exe", "#{dir}/barcode_agent/bin")
 Dir.glob("../bin/*.dll") do |file|

@@ -26,6 +26,7 @@ https://uilo.ubc.ca/about-us/contact-us
 ### Windows
 
 - Install ruby 2.7 or higher with a devkit from https://rubyinstaller.org/ .
+  - Choose ("Install only for me") and allow it to install MSYS2.
 - Double click on the file Barcode_Agent/windows_setup.rb .  This may take up to an hour.
   - If it pauses with a Y/N question, press enter to continue.
 - Put the phred executable at Barcode_Agent/bin/phred.exe .
