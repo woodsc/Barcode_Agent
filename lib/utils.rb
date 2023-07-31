@@ -22,7 +22,7 @@ def safe_copy(src, dest)
     x = nil
     begin
         x = FileUtils.cp(src, dest)
-        if(File.exists?(dest_fullname) and File.size(src) == File.size(dest_fullname))
+        if(File.exist?(dest_fullname) and File.size(src) == File.size(dest_fullname))
         else
             raise "Error"
         end

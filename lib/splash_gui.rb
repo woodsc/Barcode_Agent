@@ -49,7 +49,7 @@ def splash_gui()
     phredloc = "./bin/phred_linux_i686"
   end
 
-  if(!File.exists?(phredloc))
+  if(!File.exist?(phredloc))
     warnings << "Phred not found!
     Recall will not be able to process files without phred,
     Phred can be obtained at http://www.phrap.com/phred/ .

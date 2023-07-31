@@ -92,7 +92,7 @@ class Manager
 =end
 	#This is carbon dated, so if the .recall file is updated the info SHOULD reload.
 	def get_info(label, samp)
-		if(@sample_hash[samp] != nil and File.exists?("#{@maindir}/users/#{@user}/#{label}/#{samp}.recall") and File.mtime("#{@maindir}/users/#{@user}/#{label}/#{samp}.recall") == @sample_hash[samp].read_time)
+		if(@sample_hash[samp] != nil and File.exist?("#{@maindir}/users/#{@user}/#{label}/#{samp}.recall") and File.mtime("#{@maindir}/users/#{@user}/#{label}/#{samp}.recall") == @sample_hash[samp].read_time)
 			return @sample_hash[samp]
 		else
 			info = RecallInfo.new("#{@maindir}/users/#{@user}/#{label}/#{samp}.recall")

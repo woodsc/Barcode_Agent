@@ -30,8 +30,8 @@ class WebTasks
     # Make /upload and /data directories if they don't exist yet
     upload_dir = $settings.root+"/uploads/#{jobid}/"
     data_dir = $settings.root+"/data/#{jobid}/"
-    FileUtils.mkdir(upload_dir) if(!File.exists?(upload_dir))
-    FileUtils.mkdir(data_dir) if(!File.exists?(data_dir))
+    FileUtils.mkdir(upload_dir) if(!File.exist?(upload_dir))
+    FileUtils.mkdir(data_dir) if(!File.exist?(data_dir))
 
     newfile = file[:filename]
 
@@ -104,7 +104,7 @@ class WebTasks
   # @param jobid => job id
   def WebTasks.delete_job(jobid)
     # Check if /uploads and /data folders exist
-    return if !(File.exists?("#{$settings.root}/uploads/#{jobid}/") and File.exists?("#{$settings.root}/data/#{jobid}/"))
+    return if !(File.exist?("#{$settings.root}/uploads/#{jobid}/") and File.exist?("#{$settings.root}/data/#{jobid}/"))
 
     # Remove files from /uploads and /data
     FileUtils.rm_rf("#{$settings.root}/uploads/#{jobid}/")
@@ -117,7 +117,7 @@ class WebTasks
   def WebTasks.delete_sample(jobid, sampid)
     # Check if /uploads and /data folders exist
     puts "######{$settings.root}/data/#{jobid}/#{sampid}/"
-    return false if !(File.exists?("#{$settings.root}/uploads/#{jobid}/") and File.exists?("#{$settings.root}/data/#{jobid}/#{sampid}/"))
+    return false if !(File.exist?("#{$settings.root}/uploads/#{jobid}/") and File.exist?("#{$settings.root}/data/#{jobid}/#{sampid}/"))
 
     # Remove files from /data
     FileUtils.rm_rf("#{$settings.root}/data/#{jobid}/#{sampid}/")
@@ -137,7 +137,7 @@ class WebTasks
   # @param pfile => name of primer file
   def WebTasks.delete_primer(jobid, sampid, pfile)
     # Check if /uploads and /data folders exist
-    return false if !(File.exists?("#{$settings.root}/uploads/#{jobid}/") and File.exists?("#{$settings.root}/data/#{jobid}/#{sampid}/"))
+    return false if !(File.exist?("#{$settings.root}/uploads/#{jobid}/") and File.exist?("#{$settings.root}/data/#{jobid}/#{sampid}/"))
 
     # Remove primer file from /data
     pfile.scan(/(.+)\.+/)
@@ -152,15 +152,15 @@ class WebTasks
   # @param jobid => job id
   # @param sampid => sample id
   def WebTasks.create_sample(jobid, sampid)
-      FileUtils.mkdir($settings.root+"/data/#{jobid}/") if(!File.exists?($settings.root+"/data/#{jobid}/"))
-      FileUtils.mkdir($settings.root+"/data/#{jobid}/#{sampid}/") if(!File.exists?($settings.root+"/data/#{jobid}/#{sampid}/"))
+      FileUtils.mkdir($settings.root+"/data/#{jobid}/") if(!File.exist?($settings.root+"/data/#{jobid}/"))
+      FileUtils.mkdir($settings.root+"/data/#{jobid}/#{sampid}/") if(!File.exist?($settings.root+"/data/#{jobid}/#{sampid}/"))
   end
 
   # Phreds a file
   # @param uid => user id
   # @param file => sample file
   def WebTasks.phred(uid, file, path)
-    if(!File.exists?("#{path}#{file}.poly") or !File.exists?("#{path}#{file}.qual"))
+    if(!File.exist?("#{path}#{file}.poly") or !File.exist?("#{path}#{file}.qual"))
       # Convert from SCF3 to SCF2 if necessary
       if file[file.length-3,3].downcase=="scf"
         # create directory to house converted files
@@ -181,14 +181,14 @@ class WebTasks
         system("phred", file, "-q", "#{file}.qual", "-d", "#{file}.poly", "-process_nomatch", {:chdir => path})
 #      end
 
-      raise "phrederror" if(!File.exists?("#{path}#{file}.poly")) #Let us know if phred is choking.
+      raise "phrederror" if(!File.exist?("#{path}#{file}.poly")) #Let us know if phred is choking.
     end
   end
 
   # Links (linux) or copies (windows) files from /data to /uploads
   def WebTasks.assign_sample(jobid, filename, sampid)
       #Skip if its already there
-      return if(File.exists?($settings.root+"/data/#{jobid}/#{sampid}/#{filename}"))
+      return if(File.exist?($settings.root+"/data/#{jobid}/#{sampid}/#{filename}"))
       #delete it from other directories
       files = Dir[$settings.root+"/data/#{jobid}/*/#{filename}"]
       files.each {|f| FileUtils.rm(f) }
@@ -196,11 +196,11 @@ class WebTasks
       #copy it to new directory - method based on OS
       if (RUBY_PLATFORM =~ /mswin/)
         # Windows
-        FileUtils.cp("#{$settings.root}/uploads/#{jobid}/#{filename}", "#{$settings.root}/data/#{jobid}/#{sampid}/#{filename}") if(!File.exists?($settings.root+"/data/#{jobid}/#{sampid}/#{filename}"))
+        FileUtils.cp("#{$settings.root}/uploads/#{jobid}/#{filename}", "#{$settings.root}/data/#{jobid}/#{sampid}/#{filename}") if(!File.exist?($settings.root+"/data/#{jobid}/#{sampid}/#{filename}"))
       else
         #Speed optimization if on a unix filesystem.  (removed, so I can delete the uploads directory periodically)  Hrm...
-        FileUtils.cp("#{$settings.root}/uploads/#{jobid}/#{filename}", "#{$settings.root}/data/#{jobid}/#{sampid}/#{filename}") if(!File.exists?($settings.root+"/data/#{jobid}/#{sampid}/#{filename}"))
-        #FileUtils.ln_s("#{$settings.root}/uploads/#{jobid}/#{filename}", "#{$settings.root}/data/#{jobid}/#{sampid}/#{filename}") if(!File.exists?($settings.root+"/data/#{jobid}/#{sampid}/#{filename}"))
+        FileUtils.cp("#{$settings.root}/uploads/#{jobid}/#{filename}", "#{$settings.root}/data/#{jobid}/#{sampid}/#{filename}") if(!File.exist?($settings.root+"/data/#{jobid}/#{sampid}/#{filename}"))
+        #FileUtils.ln_s("#{$settings.root}/uploads/#{jobid}/#{filename}", "#{$settings.root}/data/#{jobid}/#{sampid}/#{filename}") if(!File.exist?($settings.root+"/data/#{jobid}/#{sampid}/#{filename}"))
       end
     end
 
@@ -1115,7 +1115,7 @@ class WebTasks
   # Retrieves the file in #{$settings.root}/config/recall/#{uid}.process which contains the current processing status
   # @param uid => user id
   def WebTasks.get_process_status(uid)
-    return "DONE" if !File.exists?("#{$settings.root}/config/recall/#{uid}.process")
+    return "DONE" if !File.exist?("#{$settings.root}/config/recall/#{uid}.process")
     file = File.new("#{$settings.root}/config/recall/#{uid}.process",'r')
 	file.flock(File::LOCK_EX)
     status = file.gets
@@ -1126,7 +1126,7 @@ class WebTasks
   # Retrieves the file in #{$settings.root}/config/recall/#{uid}.download which contains the current file download status
   # @param uid => user id
   def WebTasks.get_download_status(uid)
-    return "DONE" if !File.exists?("#{$settings.root}/config/recall/#{uid}.download")
+    return "DONE" if !File.exist?("#{$settings.root}/config/recall/#{uid}.download")
     file = File.new("#{$settings.root}/config/recall/#{uid}.download", 'r')
     status = file.gets
     file.close
@@ -1145,7 +1145,7 @@ class WebTasks
   end
 
   def WebTasks.get_error_message(uid) #and removes the file.
-    return nil if !File.exists?("#{$settings.root}/config/recall/#{uid}.err")
+    return nil if !File.exist?("#{$settings.root}/config/recall/#{uid}.err")
     file = File.new("#{$settings.root}/config/recall/#{uid}.err", 'r')
     status = file.gets
     file.close

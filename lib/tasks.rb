@@ -112,11 +112,11 @@ class Tasks
 
 	def create_label(label)
 		begin
-      FileUtils.mkdir("#{@maindir}/users/#{@user}/") if(!File.exists?("#{@maindir}/users/#{@user}/"))
-      FileUtils.mkdir("#{@maindir}/users/#{@user}/#{label}/") if(!File.exists?("#{@maindir}/users/#{@user}/#{label}/"))
-      FileUtils.mkdir("#{@maindir}/users/#{@user}/#{label}/abi") if(!File.exists?("#{@maindir}/users/#{@user}/#{label}/abi/"))
-      FileUtils.mkdir("#{@maindir}/users/#{@user}/#{label}/qual") if(!File.exists?("#{@maindir}/users/#{@user}/#{label}/qual/"))
-			FileUtils.mkdir("#{@maindir}/users/#{@user}/#{label}/apr") if(!File.exists?("#{@maindir}/users/#{@user}/#{label}/apr/"))  if(RecallConfig['common.peakcaller'] == 'apr')
+      FileUtils.mkdir("#{@maindir}/users/#{@user}/") if(!File.exist?("#{@maindir}/users/#{@user}/"))
+      FileUtils.mkdir("#{@maindir}/users/#{@user}/#{label}/") if(!File.exist?("#{@maindir}/users/#{@user}/#{label}/"))
+      FileUtils.mkdir("#{@maindir}/users/#{@user}/#{label}/abi") if(!File.exist?("#{@maindir}/users/#{@user}/#{label}/abi/"))
+      FileUtils.mkdir("#{@maindir}/users/#{@user}/#{label}/qual") if(!File.exist?("#{@maindir}/users/#{@user}/#{label}/qual/"))
+			FileUtils.mkdir("#{@maindir}/users/#{@user}/#{label}/apr") if(!File.exist?("#{@maindir}/users/#{@user}/#{label}/apr/"))  if(RecallConfig['common.peakcaller'] == 'apr')
 		rescue
       puts "Could not create label: #{@maindir}/users/#{@user}/#{label}/"
       retry
@@ -146,7 +146,7 @@ class Tasks
     rd.save
 
     if(info.qa.all_good and rd.qa.userexported)
-      FileUtils.mkdir("#{@maindir}/approved/#{@user}/#{label}/") if(!File.exists?("#{@maindir}/approved/#{@user}/#{label}/"))
+      FileUtils.mkdir("#{@maindir}/approved/#{@user}/#{label}/") if(!File.exist?("#{@maindir}/approved/#{@user}/#{label}/"))
       safe_copy("#{@maindir}/users/#{@user}/#{label}/#{samp}.recall","#{@maindir}/approved/#{@user}/#{label}/#{samp}.recall" )
     end
   end
@@ -173,9 +173,9 @@ class Tasks
       end
 
       begin
-        FileUtils.mkdir("#{@maindir}/approved/") if(!File.exists?("#{@maindir}/approved/"))
-        FileUtils.mkdir("#{@maindir}/approved/#{@user}/") if(!File.exists?("#{@maindir}/approved/#{@user}/"))
-        FileUtils.mkdir("#{@maindir}/approved/#{@user}/#{label}") if(!File.exists?("#{@maindir}/approved/#{@user}/#{label}"))
+        FileUtils.mkdir("#{@maindir}/approved/") if(!File.exist?("#{@maindir}/approved/"))
+        FileUtils.mkdir("#{@maindir}/approved/#{@user}/") if(!File.exist?("#{@maindir}/approved/#{@user}/"))
+        FileUtils.mkdir("#{@maindir}/approved/#{@user}/#{label}") if(!File.exist?("#{@maindir}/approved/#{@user}/#{label}"))
       rescue
 
       end
@@ -437,7 +437,7 @@ class Tasks
       poly = "#{@maindir}/users/#{@user}/#{label}/qual/#{name}.poly"
       qual = "#{@maindir}/users/#{@user}/#{label}/qual/#{name}.qual"
 
-      if(!File.exists?(poly) or !File.exists?(qual))
+      if(!File.exist?(poly) or !File.exist?(qual))
         message("#{msg}Phreding")
         #message("Phreding")
         if(RUBY_PLATFORM =~ /(win|w)32$/ or RUBY_PLATFORM =~ /x64-mingw-ucrt$/)
@@ -447,22 +447,22 @@ class Tasks
 					phred_exe = Dir["bin/workstation_phred.exe"].first if(phred_exe.nil?)
 					phred_exe = Dir["bin/*phred*.exe"].first if(phred_exe.nil?)
 					system("#{phred_exe} \"#{f}\" -q \"#{qual}\" -d \"#{poly}\"")
-          raise "phred_error"  if(!File.exists?("bin/phred.exe"))
+          raise "phred_error"  if(!File.exist?("bin/phred.exe"))
         elsif(RUBY_PLATFORM =~ /x86_64-linux/)
           ENV['PHRED_PARAMETER_FILE'] = './phredpar.dat'
           system("bin/phred_linux_x86_64 \"#{f}\" -q \"#{qual}\" -d \"#{poly}\"")
-          raise "phred_error"  if(!File.exists?("bin/phred_linux_x86_64"))
+          raise "phred_error"  if(!File.exist?("bin/phred_linux_x86_64"))
         elsif(RUBY_PLATFORM =~ /i686-darwin10/)
           ENV['PHRED_PARAMETER_FILE'] = './phredpar.dat'
           system("bin/phred_darwin \"#{f}\" -q \"#{qual}\" -d \"#{poly}\"") #doesn't actually exist yet
-          raise "phred_error"  if(!File.exists?("bin/phred_darwin"))
+          raise "phred_error"  if(!File.exist?("bin/phred_darwin"))
         else #probably 32 bit linux
           ENV['PHRED_PARAMETER_FILE'] = './phredpar.dat'
           system("bin/phred_linux_i686 \"#{f}\" -q \"#{qual}\" -d \"#{poly}\"")
-          raise "phred_error"  if(!File.exists?("bin/phred_linux_i686"))
+          raise "phred_error"  if(!File.exist?("bin/phred_linux_i686"))
         end
         #Now we can get rid of this, but I think something more needs to be done. #TODO
-        #raise "phred_error" if(!File.exists?(poly) or !File.exists?(qual)) #should determine if phred error or corrupted ABI.
+        #raise "phred_error" if(!File.exist?(poly) or !File.exist?(qual)) #should determine if phred error or corrupted ABI.
       end
     end
   end
@@ -781,8 +781,8 @@ class Tasks
     end
 
     begin
-      FileUtils.mkdir("#{@maindir}/logs/") if(!File.exists?("#{@maindir}/logs/"))
-      FileUtils.mkdir("#{@maindir}/logs/#{@user}/") if(!File.exists?("#{@maindir}/logs/#{@user}/"))
+      FileUtils.mkdir("#{@maindir}/logs/") if(!File.exist?("#{@maindir}/logs/"))
+      FileUtils.mkdir("#{@maindir}/logs/#{@user}/") if(!File.exist?("#{@maindir}/logs/#{@user}/"))
     rescue
 
     end

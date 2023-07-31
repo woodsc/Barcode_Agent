@@ -724,7 +724,7 @@ class Finisher
       buttons: [['Save', :accept], [Gtk::Stock::CANCEL, :cancel]])
     fcd.set_size_request(700, -1)
 
-    if(@sh_dir and @sh_dir != '' and File.exists?(@sh_dir))
+    if(@sh_dir and @sh_dir != '' and File.exist?(@sh_dir))
       fcd.set_current_folder(@sh_dir)
       fcd.set_filename(@sh_dir)
     end

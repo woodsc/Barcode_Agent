@@ -1054,7 +1054,7 @@ class Gui
     #@window.events = 0
     @window.sensitive = false
 
-    if(@export_dir and @export_dir != '' and File.exists?(@export_dir))
+    if(@export_dir and @export_dir != '' and File.exist?(@export_dir))
       Dir[@export_dir]
     else
       Dir['./']
@@ -1067,7 +1067,7 @@ class Gui
       buttons: [['Continue', :accept], [Gtk::Stock::CANCEL, :cancel]])
 
     fcd.set_size_request(700, -1)
-		fcd.set_current_folder(@export_dir) if(@export_dir and @export_dir != '' and File.exists?(@export_dir))
+		fcd.set_current_folder(@export_dir) if(@export_dir and @export_dir != '' and File.exist?(@export_dir))
 		dir = ''
 		if(fcd.run == Gtk::ResponseType::ACCEPT)
 			dir = fcd.filename
@@ -1100,7 +1100,7 @@ class Gui
     end #endif we are exporting to aa
 
     # Exporting to text files requires that we check for existing files.
-    no_overwrite_samps = samps.find_all {|s| File.exists?(dir + "/#{s[0]}.txt")}.map{|s| [s[0]]}
+    no_overwrite_samps = samps.find_all {|s| File.exist?(dir + "/#{s[0]}.txt")}.map{|s| [s[0]]}
 
     if(no_overwrite_samps.size > 0)
       pcd = Gtk::Dialog.new(title: "These samples already exist here, overwrite?",
@@ -1251,7 +1251,7 @@ class Gui
       buttons: [['Continue', :accept], [Gtk::Stock::CANCEL, :cancel]])
     fcd.select_multiple = true
 
-		fcd.set_current_folder(@add_samples_dir) if(File.exists?(@add_samples_dir))
+		fcd.set_current_folder(@add_samples_dir) if(File.exist?(@add_samples_dir))
     dirs = []
 		if(fcd.run == Gtk::ResponseType::ACCEPT)
 			dirs = fcd.filenames
