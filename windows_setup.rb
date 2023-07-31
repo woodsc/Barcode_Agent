@@ -12,5 +12,12 @@ end
 #Installing gtk3
 system("gem install gtk3")
 
+#running checksums
+system("ruby create_code_checksum.rb --auto")
+
+FileUtils.cd("config/") do
+  system("ruby create_checksum.rb --auto")
+end
+
 puts "Windows setup finished"
 STDIN.gets

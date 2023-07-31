@@ -447,7 +447,7 @@ class Tasks
 					phred_exe = Dir["bin/workstation_phred.exe"].first if(phred_exe.nil?)
 					phred_exe = Dir["bin/*phred*.exe"].first if(phred_exe.nil?)
 					system("#{phred_exe} \"#{f}\" -q \"#{qual}\" -d \"#{poly}\"")
-          raise "phred_error"  if(!File.exist?("bin/phred.exe"))
+          raise "phred_error"  if(!File.exist?(phred_exe))
         elsif(RUBY_PLATFORM =~ /x86_64-linux/)
           ENV['PHRED_PARAMETER_FILE'] = './phredpar.dat'
           system("bin/phred_linux_x86_64 \"#{f}\" -q \"#{qual}\" -d \"#{poly}\"")

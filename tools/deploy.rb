@@ -52,11 +52,11 @@ FileUtils.cp("../phredpar.dat", "#{dir}/barcode_agent/")
 
 #create checksums
 FileUtils.cd("#{dir}/barcode_agent") do
-  system("ruby create_code_checksum.rb")
+  system("ruby create_code_checksum.rb --auto")
 end
 
 FileUtils.cd("#{dir}/barcode_agent/config") do
-  system("ruby create_checksum.rb")
+  system("ruby create_checksum.rb  --auto")
 end
 
 #tar gz
