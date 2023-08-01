@@ -37,8 +37,8 @@ https://uilo.ubc.ca/about-us/contact-us
 - Install ruby 2.7 or higher (and ruby-dev).
 - Install the alignment.gem
 ```
-cd Barcode_agent/
-gem install alignment_ext-0.0.0.gem
+cd Barcode_agent/bin
+gem install alignment_ext-1.0.0.gem
 ```
 - Install gtk2
     `sudo apt-get install libgtk-3-dev`   (for debian based systems)
