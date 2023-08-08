@@ -29,6 +29,8 @@ class SequenceEditor < Gtk::Box
     set_rd(rd)
 
     @hide_aa = RecallConfig['guiconfig.hide_aa'] == 'true'
+    @hide_ref = RecallConfig['guiconfig.hide_ref'] == 'true'
+    @use_base_num = RecallConfig['guiconfig.use_base_num'] == 'true'
 
     @sindex = 0
     @magic_mode = false
@@ -45,7 +47,12 @@ class SequenceEditor < Gtk::Box
       @amino_draw.set_size_request(-1, 40)
     end
     @amino_sep = Gtk::Separator.new(:horizontal)
-    @amino_expander = Gtk::Expander.new("Reference Frame")
+    @amino_expander = nil
+    if(@use_base_num)
+      @amino_expander = Gtk::Expander.new("Base #")
+    else
+      @amino_expander = Gtk::Expander.new("Codon #")
+    end
     @char_width = 23 #23 orig
     @index = 0
     @bw = false
@@ -55,8 +62,10 @@ class SequenceEditor < Gtk::Box
 
     self.pack_start(@amino_expander, expand: false)
     self.pack_start(@amino_sep, expand: false)
-    self.pack_start(@standard_expander, expand: false)
-    self.pack_start(@standard_sep, expand: false)
+    if(!@hide_ref)
+      self.pack_start(@standard_expander, expand: false)
+      self.pack_start(@standard_sep, expand: false)
+    end
     self.pack_start(@assembled_draw, expand: false)
 
     @amino_labels = RecallConfig['finisher.amino_labels']
@@ -112,6 +121,7 @@ class SequenceEditor < Gtk::Box
   end
 
   def draw_standard(context)
+    return if(@hide_ref)
     widget = @standard_draw
     window = widget.window
     win_width = window.width
@@ -163,7 +173,7 @@ class SequenceEditor < Gtk::Box
     #Draw "Assembled" label
     context.set_source_rgb(*$colours['black'])
     label = widget.create_pango_layout("")
-    label.markup="<markup><span size='small'>Assembled - #{@rd.sample}</span></markup>"
+    label.markup="<markup><span font_desc='Sans 10.5'>Assembled - #{@rd.sample}</span></markup>"
     context.move_to((win_width / 2) - (label.pixel_size[0] / 2), 0)
     context.show_pango_layout(label)
 
@@ -238,58 +248,90 @@ class SequenceEditor < Gtk::Box
 
     context.set_source_rgb(*$colours['black'])
 
-    #draw each amino
-    0.upto((win_width / @char_width).to_i) do |i|
-      dex = i + @sindex + @start_dex
+    if(@use_base_num)  #show nucleotide guidelines
 
-      r_dex = @dex_hash[dex]
-      #If frame aligned & not an indel?
-      if(r_dex != nil and r_dex % 3 == 0)
-        if(@amino_labels == nil)
-          c = widget.create_layout(((r_dex / 3).to_i + 1).to_s, $text_colours['black'])
-          spot = (@char_width / 2)
-          #draw amino acid index
-          context.move_to(i * @char_width + spot + start_px - 7, 1)
-          context.show_pango_layout(c)
-        else
+      #draw each nucleotide num
+      0.upto((win_width / @char_width).to_i) do |i|
+        dex = i + @sindex + @start_dex
+
+        r_dex = @dex_hash[dex]
+
+        if(r_dex != nil) #not an indel?
+          clabel = (r_dex.to_i + 1).to_s
           c = widget.create_layout('', $text_colours['black'])
-          c.set_markup("<span size='small'>" + @amino_labels[(r_dex / 3).to_i].to_s + " (#{(r_dex / 3).to_i + 1})</span>" )
-          spot = ((@char_width * 3) / 2)
-          #draw amino acid label
-          context.move_to(i * @char_width + spot + start_px - 7, 1)
+          c.set_markup("<span font_desc='Sans 6'>#{clabel}</span>")
+          spot = (@char_width / 2)
+          #draw nucleotide index
+          if(clabel.size() >= 3) #triple digits need more offset
+            context.move_to(i * @char_width + spot + start_px - 17, 1)
+          else
+            context.move_to(i * @char_width + spot + start_px - 13, 1)
+          end
           context.show_pango_layout(c)
+
+          #draw seperator line
+          context.move_to(i * @char_width + start_px - 7, 1)
+          context.line_to(i * @char_width + start_px - 7, win_height)
+          context.stroke
         end
+      end
 
-        #draw amino seperator line
-        context.move_to(i * @char_width + start_px - 7, 1)
-        context.line_to(i * @char_width + start_px - 7, win_height)
-        context.stroke
 
-        r_dex = @dex_hash_abs[dex]
-        if(!@hide_aa)
-          if(@dex_list[r_dex, 3].size == 3)
-            nuc = @rd.assembled[@dex_list[r_dex],1] + @rd.assembled[@dex_list[r_dex + 1],1] + @rd.assembled[@dex_list[r_dex + 2],1]
+    else #Show amino acid guidelines
+      #draw each amino
+      0.upto((win_width / @char_width).to_i) do |i|
+        dex = i + @sindex + @start_dex
+
+        r_dex = @dex_hash[dex]
+        #If frame aligned & not an indel?
+        if(r_dex != nil and r_dex % 3 == 0)
+          if(@amino_labels == nil)
+            c = widget.create_layout(((r_dex / 3).to_i + 1).to_s, $text_colours['black'])
+            spot = (@char_width / 2)
+            #draw amino acid index
+            context.move_to(i * @char_width + spot + start_px - 7, 1)
+            context.show_pango_layout(c)
+          else
+            c = widget.create_layout('', $text_colours['black'])
+            c.set_markup("<span font_desc='Sans 10.5'>" + @amino_labels[(r_dex / 3).to_i].to_s + " (#{(r_dex / 3).to_i + 1})</span>" )
+            spot = ((@char_width * 3) / 2)
+            #draw amino acid label
+            context.move_to(i * @char_width + spot + start_px - 7, 1)
+            context.show_pango_layout(c)
+          end
+
+          #draw amino seperator line
+          context.move_to(i * @char_width + start_px - 7, 1)
+          context.line_to(i * @char_width + start_px - 7, win_height)
+          context.stroke
+
+          r_dex = @dex_hash_abs[dex]
+          if(!@hide_aa)
+            if(@dex_list[r_dex, 3].size == 3)
+              nuc = @rd.assembled[@dex_list[r_dex],1] + @rd.assembled[@dex_list[r_dex + 1],1] + @rd.assembled[@dex_list[r_dex + 2],1]
+              aa = translate(nuc).join('')
+              aa = aa.length > 6 ? '*' : aa
+              c = widget.create_layout(aa, $text_colours['black'])
+              #draw amino acid
+              context.move_to(i * @char_width + start_px + 2, 20)
+              context.show_pango_layout(c)
+            end
+          end
+        #elsif Indel or something
+        elsif(r_dex == nil and @dex_hash_abs[dex] != nil and @dex_hash_abs[dex] % 3 == 0)
+          r_dex_abs = @dex_hash_abs[dex]
+          if(!@hide_aa)
+            nuc = @rd.assembled[@dex_list[r_dex_abs - r_dex_abs % 3],1] + @rd.assembled[@dex_list[r_dex_abs - r_dex_abs % 3 + 1],1] + @rd.assembled[@dex_list[r_dex_abs - r_dex_abs % 3 + 2],1]
             aa = translate(nuc).join('')
             aa = aa.length > 6 ? '*' : aa
             c = widget.create_layout(aa, $text_colours['black'])
-            #draw amino acid
             context.move_to(i * @char_width + start_px + 2, 20)
             context.show_pango_layout(c)
           end
         end
-      #elsif Indel or something
-      elsif(r_dex == nil and @dex_hash_abs[dex] != nil and @dex_hash_abs[dex] % 3 == 0)
-        r_dex_abs = @dex_hash_abs[dex]
-        if(!@hide_aa)
-          nuc = @rd.assembled[@dex_list[r_dex_abs - r_dex_abs % 3],1] + @rd.assembled[@dex_list[r_dex_abs - r_dex_abs % 3 + 1],1] + @rd.assembled[@dex_list[r_dex_abs - r_dex_abs % 3 + 2],1]
-          aa = translate(nuc).join('')
-          aa = aa.length > 6 ? '*' : aa
-          c = widget.create_layout(aa, $text_colours['black'])
-          context.move_to(i * @char_width + start_px + 2, 20)
-          context.show_pango_layout(c)
-        end
       end
     end
+
 
     #bottom line
     context.move_to(0, 0)

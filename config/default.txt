@@ -90,6 +90,9 @@ guiconfig.win_maximized=false
 guiconfig.h_stretch=1.0
 guiconfig.w_stretch=2.0
 guiconfig.background_colour=1.0,1.0,1.0
+guiconfig.hide_aa=false
+guiconfig.hide_ref=false
+guiconfig.use_base_num=false
 
 
 standard.keylocs=

@@ -108,6 +108,11 @@ All project files are named as proj_PROJECTNAME.txt .  These must match the refe
 - **quality_checker.max_ns**:  Acceptable N count threshold.
 - **quality_checker.max_marks**:  Acceptable mark count threshold.
 
+- **guiconfig.hide_aa**:  Hides the amino acid view in the finisher, for projects without a reference sequence.
+- **guiconfig.hide_ref**:  Hides the reference view in the finisher, for projects without a reference sequence.
+- **guiconfig.use_base_num**:  Displays base number guidelines instead of codon guidelines, for projects without a reference sequence.
+
+
 ### Sample/Primer File Syntax
 
 Barcode Agent processes chromatogram files by splitting the filename into samplename and primer values, however many labs use widely varying naming schemes for their files.  Because of this we have three different ways to process filenames.

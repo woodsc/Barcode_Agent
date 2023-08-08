@@ -1014,7 +1014,7 @@ class Gui
     export_type.append_text("Export as fasta")
     export_type.append_text("Export as text ")
     export_type.append_text("Export as text (amino acids)")
-    export_type.set_active(1)
+    export_type.set_active(0)
 
     #add a label to the box so we know what its for.
     box2.add(Gtk::Label.new("Export Type"))

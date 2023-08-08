@@ -18,3 +18,5 @@ tasks.export_with_dashes=true
 insert_detector.frame_align_deletions=false
 
 guiconfig.hide_aa=true
+guiconfig.hide_ref=true
+guiconfig.use_base_num=true

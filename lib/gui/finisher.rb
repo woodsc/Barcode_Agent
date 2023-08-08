@@ -41,6 +41,11 @@ class Finisher
     @sample = sample
     @label = label
     @sh_dir = ''
+
+    @hide_aa = RecallConfig['guiconfig.hide_aa'] == 'true'
+    @hide_ref = RecallConfig['guiconfig.hide_ref'] == 'true'
+    @use_base_num = RecallConfig['guiconfig.use_base_num'] == 'true'
+
     restart()
   end
 
@@ -361,7 +366,11 @@ class Finisher
     if(@magic_mode)
       message("Base: #{j + 1}\t Absolute Codon: (#{(j / 3) + 1})\tAverage Quality: #{avg_qual}\tCoverage #{cov}\tAmino Acids:  #{aminos}\tMixture Percentages:  #{percs}") if(j != nil)
     else
-      message("Base: #{j + 1}\t Absolute Codon: (#{(j / 3) + 1})\tAverage Quality: #{avg_qual}\tCoverage #{cov}\tAmino Acids:  #{aminos}") if(j != nil)
+      if(@hide_aa)
+        message("Base: #{j + 1}\t Average Quality: #{avg_qual}\tCoverage #{cov}\t") if(j != nil)
+      else
+        message("Base: #{j + 1}\t Absolute Codon: (#{(j / 3) + 1})\tAverage Quality: #{avg_qual}\tCoverage #{cov}\tAmino Acids:  #{aminos}") if(j != nil)
+      end
     end
     queue_draw()
   end
