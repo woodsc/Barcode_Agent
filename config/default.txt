@@ -39,8 +39,8 @@ primer_fixer.primer_min_good=60
 primer_fixer.foreground_peak_percent=80
 
 base_caller.mark_on_single_cov=true
-base_caller.mixture_area_percent=0.175
-base_caller.mark_area_percent=0.15
+base_caller.mixture_area_percent=0.35
+base_caller.mark_area_percent=0.30
 base_caller.mark_average_quality_cutoff=15
 base_caller.remove_single_cov_inserts=true
 base_caller.use_background_subtraction=true
