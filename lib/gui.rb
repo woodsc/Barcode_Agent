@@ -978,6 +978,7 @@ class Gui
       end
 		end
 		to_fasta = nil
+    export_opt = nil
 
     box = Gtk::Box.new(:horizontal)
     select_all = Gtk::ComboBoxText.new()
@@ -1011,7 +1012,8 @@ class Gui
     export_type = Gtk::ComboBoxText.new()
 
     # export options are text and fasta
-    export_type.append_text("Export as fasta")
+    export_type.append_text("Export as fasta (combined)")
+    export_type.append_text("Export as fasta (file per sample)")
     export_type.append_text("Export as text ")
     export_type.append_text("Export as text (amino acids)")
     export_type.set_active(0)
@@ -1034,21 +1036,16 @@ class Gui
 					s[4] = s[4].active_text
 				end
 
-				to_fasta = export_type.active_text.include?('fasta')
-        to_aa = export_type.active_text.include?('amino acids')
+				to_fasta = export_type.active_text.include?('Export as fasta (combined)')
+        export_opt = export_type.active_text
 				samps.delete_if {|s| !s[4].include?('Export')}
 				pcd.destroy
 			else
 				pcd.destroy
 				return
 			end
-		#else
-		#	to_fasta = false
-		#	samps.delete_if do |s|
-		#		info = @mgr.get_info(@current_label, s[0])
-		#		!info.qa.all_good
-		#	end
-		#end
+
+
 		#Ask for a path
     #@_w_events = @window.events
     #@window.events = 0
@@ -1082,19 +1079,35 @@ class Gui
   #@window.events = @_w_events
   @window.sensitive = true
 
-        # If we are exporting to fasta, dont worry about overwriting. go straight to exportation.
-    if to_fasta
-    #Now export the samples in their own thread.
+  raw_samps = []
+  samps.each do |s|
+    s[1].each do |x|
+      raw_samps << x if(x[0,1] != '*')
+    end
+  end
+
+    # If we are exporting to fasta, dont worry about overwriting. go straight to exportation.
+    if(export_opt == 'Export as fasta (combined)')
+      #Now export the samples in their own thread.
       threaded(true) do
         @tasks.export_samples_to_fasta(@current_label, samps.map{|s| [s[0]] + s[1]}, dir)
+        @tasks.user_exported(@current_label, raw_samps)
+        @tasks.approve_samples(@current_label, raw_samps, true)
       end
       return
-    end #endif we are exporting to fasta.
-
-    if to_aa
+    elsif(export_opt == 'Export as text (amino acids)') #aa
     #Now export the samples in their own thread.
       threaded(true) do
         @tasks.export_samples_to_aa(@current_label, samps.map{|s| [s[0]] + s[1]}, dir)
+        @tasks.user_exported(@current_label, raw_samps)
+        @tasks.approve_samples(@current_label, raw_samps, true)
+      end
+      return
+    elsif(export_opt == 'Export as fasta (file per sample)')
+      threaded(true) do
+        @tasks.export_samples_to_ind_fasta(@current_label, samps.map{|s| [s[0]] + s[1]}, dir)
+        @tasks.user_exported(@current_label, raw_samps)
+        @tasks.approve_samples(@current_label, raw_samps, true)
       end
       return
     end #endif we are exporting to aa

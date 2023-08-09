@@ -607,6 +607,49 @@ class Tasks
     end #end file.open as f
   end #end def E_S_T_F
 
+	def export_samples_to_ind_fasta(label, samples, dir)
+		samples.each do |s|
+			join = (s.class == Array)
+			txt = nil
+			message("Exporting #{join ? s[0] : s}")
+			rd = nil
+
+			if(join)
+				tmp = []
+				s[1 .. -1].each do |sp|
+					if(sp[0,1] == '*')
+						tmp.push('N' * StandardInfo.sequence(sp[1 .. -1]).size)
+					else
+						rd = @mgr.get_info(label, sp)
+						tmp.push(rd.export_seq)
+					end
+				end
+				txt = tmp.join('XXX')
+			else
+				rd = @mgr.get_info(label, s)
+				txt = rd.export_seq
+			end
+
+			RecallConfig.set_context(rd.project, @user)
+
+			if(RecallConfig['tasks.export_lc_edits'] == 'true')
+				rd.human_edits.each do |he|
+					loc = he[0].to_i - rd.start_dex
+					txt[loc,1] = txt[loc,1].downcase  #maye works?
+				end
+			end
+
+			if(RecallConfig['tasks.export_with_dashes'] == 'false')
+				txt.gsub!(/-/,'')
+			end
+
+			File.open("#{dir}/#{join ? s[0] : s}.fas", 'w') do |f|
+				f.puts ">#{join ? s[0] : s}"
+        f.puts txt
+			end
+		end
+	end
+
   def export_samples_to_aa(label, samples, dir)
     samples.each do |s|
       join = (s.class == Array)
