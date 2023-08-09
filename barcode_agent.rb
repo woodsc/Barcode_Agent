@@ -34,7 +34,7 @@ require 'lib/addons/svg_export/svg_export.rb'
 RecallConfig.load('./config/')
 
 user = splash_gui()
-exit() if(user.nil?)
+exit() if(user.nil? or user.strip() == '')
 
 RecallConfig.set_context(nil, user)
 PrimerInfo.Load("./config/primers.txt")
