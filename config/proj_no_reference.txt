@@ -13,7 +13,7 @@ quality_checker.check_stop_codons=false
 quality_checker.check_hasinserts=false
 quality_checker.check_hasdeletions=false
 
-tasks.export_with_dashes=true
+tasks.export_with_dashes=false
 
 insert_detector.frame_align_deletions=false
 
