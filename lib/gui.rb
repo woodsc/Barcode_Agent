@@ -1027,23 +1027,22 @@ class Gui
     pcd.child.pack_start(box2, expand: false)
     #end
 
-		#if(!default)
-			pcd.child.show_all
+		pcd.child.show_all
 
-			if(pcd.run == Gtk::ResponseType::ACCEPT)
-			#Get values of samples/projects
-				samps.each do |s|
-					s[4] = s[4].active_text
-				end
-
-				to_fasta = export_type.active_text.include?('Export as fasta (combined)')
-        export_opt = export_type.active_text
-				samps.delete_if {|s| !s[4].include?('Export')}
-				pcd.destroy
-			else
-				pcd.destroy
-				return
+		if(pcd.run == Gtk::ResponseType::ACCEPT)
+		#Get values of samples/projects
+			samps.each do |s|
+				s[4] = s[4].active_text
 			end
+
+			to_fasta = export_type.active_text.include?('Export as fasta (combined)')
+      export_opt = export_type.active_text
+			samps.delete_if {|s| !s[4].include?('Export')}
+			pcd.destroy
+		else
+			pcd.destroy
+			return
+		end
 
 
 		#Ask for a path
@@ -1071,20 +1070,20 @@ class Gui
 			fcd.destroy
 		else
 			fcd.destroy
-
       #@window.events = @_w_events
       @window.sensitive = true
 			return
 		end
-  #@window.events = @_w_events
-  @window.sensitive = true
 
-  raw_samps = []
-  samps.each do |s|
-    s[1].each do |x|
-      raw_samps << x if(x[0,1] != '*')
+    #@window.events = @_w_events
+    @window.sensitive = true
+
+    raw_samps = []
+    samps.each do |s|
+      s[1].each do |x|
+        raw_samps << x if(x[0,1] != '*')
+      end
     end
-  end
 
     # If we are exporting to fasta, dont worry about overwriting. go straight to exportation.
     if(export_opt == 'Export as fasta (combined)')
@@ -1333,7 +1332,11 @@ class Gui
       sb.set_size_request(-1, 400)
       pcd.child.add(sb)
 
-      box = Gtk::Table.new(3, samps.size - 1)
+      #box = Gtk::Table.new(3, samps.size - 1)
+      box = Gtk::Grid.new #(3, samps.size - 1)
+      box.row_spacing = 5
+      box.column_spacing = 5
+
       sb.add_with_viewport(box)
       sb = box
 
@@ -1346,7 +1349,7 @@ class Gui
         lab.valign = :fill
         lab.margin_top = 2
         lab.margin_bottom = 4
-        sb.attach(lab, i, i + 1, 0, 1)
+        sb.attach(lab, i, 0, 1, 1)
       end
 
       i = 1
@@ -1371,7 +1374,7 @@ class Gui
 
         select_proj = Gtk::ComboBoxText.new()
         select_proj.hexpand = true
-        select_proj.vexpand = true
+        select_proj.vexpand = false
         select_proj.halign = :fill
         select_proj.valign = :fill
         select_proj.margin_top = 2
@@ -1379,7 +1382,7 @@ class Gui
 
         select_label = Gtk::ComboBoxText.new()
         select_label.hexpand = true
-        select_label.vexpand = true
+        select_label.vexpand = false
         select_label.halign = :fill
         select_label.valign = :fill
         select_label.margin_top = 2
@@ -1387,15 +1390,15 @@ class Gui
 
         samp_label = Gtk::Label.new("#{s[0]} (#{primers.size} primers)")
         samp_label.hexpand = true
-        samp_label.vexpand = true
+        samp_label.vexpand = false
         samp_label.halign = :fill
         samp_label.valign = :fill
         samp_label.margin_top = 2
         samp_label.margin_bottom = 2
 
-        sb.attach(samp_label, 0, 1, i, i + 1)
-        sb.attach(select_proj, 1, 2, i, i + 1)
-        sb.attach(select_label, 2, 3, i, i + 1)
+        sb.attach(samp_label, 0, i, 1, 1)
+        sb.attach(select_proj, 1, i, 1, 1)
+        sb.attach(select_label, 2, i, 1, 1)
 
         s.push(select_proj)
         s.push(select_label)
